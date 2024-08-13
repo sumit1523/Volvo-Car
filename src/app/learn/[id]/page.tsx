@@ -5,16 +5,25 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Loader from "@/app/components/Loader";
 
+// Define the Car type
+interface Car {
+  id: string;
+  modelName: string;
+  imageUrl: string;
+  bodyType: string;
+  modelType: string;
+}
+
 const LearnPage: React.FC = () => {
-  const { id } = useParams();
-  const [car, setCar] = useState(null);
+  const { id } = useParams<{ id: string }>(); // Specify the type for useParams
+  const [car, setCar] = useState<Car | null>(null); // Use the Car type for state
 
   useEffect(() => {
     if (id) {
       const fetchCarDetails = async () => {
         const response = await fetch("/api/cars");
-        const cars = await response.json();
-        const selectedCar = cars.find((car) => car.id === id);
+        const cars: Car[] = await response.json(); // Define the type for cars
+        const selectedCar = cars.find((car) => car.id === id) || null; // Ensure selectedCar is null if not found
         setCar(selectedCar);
       };
       fetchCarDetails();
