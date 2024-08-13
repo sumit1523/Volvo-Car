@@ -1,10 +1,12 @@
-import VolvoSlider from "./VolvoSlider";
+import React from "react";
+import ProductList from "./components/ProductList";
 
-export default function Home() {
+const Home: React.FC = () => {
   return (
-    <div className="container-max">
-      <h1 className="heading-1">Volvo Car For a better future</h1>
-      <VolvoSlider />
+    <div>
+      <ProductList />
     </div>
   );
-}
+};
+
+export default Home;
