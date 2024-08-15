@@ -45,6 +45,7 @@ const ProductList: React.FC = () => {
   const [filteredCars, setFilteredCars] = useState<Car[]>([]);
   const [message, setMessage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
+  const [selectedBodyType, setSelectedBodyType] = useState("all");
 
   useEffect(() => {
     const fetchCars = async () => {
@@ -82,6 +83,7 @@ const ProductList: React.FC = () => {
 
   const handleBodyTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedType = e.target.value;
+    setSelectedBodyType(selectedType);
     setFilteredCars(
       selectedType === "all"
         ? cars
@@ -125,6 +127,7 @@ const ProductList: React.FC = () => {
         <Select
           label="Select a car model"
           name="bodyType"
+          value={selectedBodyType}
           onChange={handleBodyTypeChange}
         >
           {bodyTypeOptions.map((option) => (
@@ -135,7 +138,7 @@ const ProductList: React.FC = () => {
         </Select>
       </div>
 
-      <Slider {...settings}>
+      <Slider {...settings} lazyLoad="ondemand">
         {filteredCars.map((car) => (
           <div key={car.id} className="vcc-card" style={{ margin: "0 10px" }}>
             <div style={{ textAlign: "left" }}>
@@ -153,6 +156,7 @@ const ProductList: React.FC = () => {
               height={200}
               layout="responsive"
               style={{ marginBottom: "10px" }}
+              priority
             />
 
             <div className="vcc-card-actions">
